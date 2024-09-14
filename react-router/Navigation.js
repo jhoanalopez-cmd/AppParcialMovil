@@ -5,18 +5,30 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
+
 import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
+import CatScreen from "./src/screens/CatScreen";  // Importar CatScreen
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-// Configuración del Stack Navigator
-function StackNavigator() {
+// Configuración del Stack Navigator para perros
+function DogStackNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Stack.Screen name="Details" component={DetailScreen} options={{ title: 'Details' }} />
+    <Stack.Navigator >
+      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Conoce acerca de los perros' }} />
+      <Stack.Screen name="Details" component={DetailScreen} options={{ title: 'Detalles' }} />
+    </Stack.Navigator>
+  );
+}
+
+// Configuración del Stack Navigator para gatos (puedes reutilizar DetailScreen si quieres)
+function CatStackNavigator() {
+  return (
+    <Stack.Navigator >
+      <Stack.Screen name="Cats" component={CatScreen} options={{ title: 'Conoce acerca de los gatos' }} />
+      <Stack.Screen name="Details" component={DetailScreen} options={{ title: 'Detalles' }} />
     </Stack.Navigator>
   );
 }
@@ -28,13 +40,13 @@ export default function Layout() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen
-            name="Home"
-            component={StackNavigator} 
+            name="Dogs"
+            component={DogStackNavigator}
             options={{
-              drawerLabel: 'Home',
+              drawerLabel: 'Dogs',
               drawerIcon: ({ focused, size }) => (
                 <Ionicons
-                  name={focused ? 'home' : 'home-outline'}
+                  name={focused ? 'paw' : 'paw-outline'}
                   size={size}
                   color={focused ? '#2196F3' : '#000'}
                 />
@@ -42,7 +54,21 @@ export default function Layout() {
               drawerLabelStyle: { color: '#2196F3' },
             }}
           />
-          {/* Puedes eliminar otras pantallas si no son necesarias */}
+          <Drawer.Screen
+            name="Cats"
+            component={CatStackNavigator}
+            options={{
+              drawerLabel: 'Cats',
+              drawerIcon: ({ focused, size }) => (
+                <Ionicons
+                  name={focused ? 'sparkles' : 'sparkles-outline'}
+                  size={size}
+                  color={focused ? '#800080' : '#000'}
+                />
+              ),
+              drawerLabelStyle: { color: '#800080' },
+            }}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
